@@ -14,28 +14,29 @@ export default class ProgressBar extends Component {
     this.progress.style.width = `${offset}px`;
   };
 
-  mouseDownHandler() {
+  mouseDownHandler(event) {
     event.preventDefault();
     this.setState({
       isClicked : true
     });
   }
 
-  mouseUpHandler() {
+  mouseUpHandler(event) {
     event.preventDefault();
     this.setState({
       isClicked : false
     });
   }
 
-  mouseMoveHandler(e) {
+  mouseMoveHandler(event) {
     if (this.state.isClicked === true) {
       const parentPosition = this.bar.offsetLeft;
       const parentWidth = this.bar.getBoundingClientRect().width;
-      e = e || window.event;
-      let dragX = e.pageX;
+      event = event || window.event;
+      const dragX = event.pageX;
+      const offset = (dragX - parentPosition) <= 300 ? dragX - parentPosition : parentWidth
       this.setState({
-        offset: (dragX - parentPosition) <= 300 ? dragX - parentPosition : parentWidth
+        offset
       });
       this.setBar();
     }
