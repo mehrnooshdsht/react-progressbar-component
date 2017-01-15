@@ -8,27 +8,27 @@ export default class ProgressBar extends Component {
     offset: 0 //use to set the left of draggable and width of progress
   };
 
-  setBar() {
+  setBar = () => {
     const { offset } = this.state;
     this.draggable.style.left = `${offset-1}px`; //for better view
     this.progress.style.width = `${offset}px`;
   };
 
-  mouseDownHandler(event) {
+  mouseDownHandler = event => {
     event.preventDefault();
     this.setState({
       isClicked : true
     });
   }
 
-  mouseUpHandler(event) {
+  mouseUpHandler = event => {
     event.preventDefault();
     this.setState({
       isClicked : false
     });
   }
 
-  mouseMoveHandler(event) {
+  mouseMoveHandler = event => {
     if (this.state.isClicked === true) {
       const parentPosition = this.bar.offsetLeft;
       const parentWidth = this.bar.getBoundingClientRect().width;
@@ -44,7 +44,14 @@ export default class ProgressBar extends Component {
 
   render() {
     return (
-      <div id="bar" ref={(div) => { this.bar = div; }} onMouseDown={this.mouseDownHandler.bind(this)} onMouseUp={this.mouseUpHandler.bind(this)} onMouseLeave={this.mouseUpHandler.bind(this)} onMouseMove={this.mouseMoveHandler.bind(this)}>
+      <div
+        id="bar"
+        ref={(div) => { this.bar = div; }}
+        onMouseDown={this.mouseDownHandler}
+        onMouseUp={this.mouseUpHandler}
+        onMouseLeave={this.mouseUpHandler}
+        onMouseMove={this.mouseMoveHandler}
+      >
         <div id="progress" ref={(div) => { this.progress = div; }}>
         </div>
         <div id="draggable" ref={(div) => { this.draggable = div; }}>
