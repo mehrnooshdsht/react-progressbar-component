@@ -3,8 +3,9 @@ import styles from './ProgressBar.scss';
 
 export default class ProgressBar extends Component {
 
+  isDragging  = false;
+
   state = {
-    isClicked: false,
     offset: 0 //use to set the left of draggable and width of progress
   };
 
@@ -16,20 +17,16 @@ export default class ProgressBar extends Component {
 
   mouseDownHandler = event => {
     event.preventDefault();
-    this.setState({
-      isClicked : true
-    });
+    this.isDragging = true;
   }
 
   mouseUpHandler = event => {
     event.preventDefault();
-    this.setState({
-      isClicked : false
-    });
+    this.isDragging = false;
   }
 
   mouseMoveHandler = event => {
-    if (this.state.isClicked === true) {
+    if (this.isDragging  === true) {
       const parentPosition = this.bar.offsetLeft;
       const parentWidth = this.bar.getBoundingClientRect().width;
       event = event || window.event;
@@ -52,9 +49,15 @@ export default class ProgressBar extends Component {
         onMouseLeave={this.mouseUpHandler}
         onMouseMove={this.mouseMoveHandler}
       >
-        <div id="progress" ref={(div) => { this.progress = div; }}>
+        <div
+          id="progress"
+          ref={(div) => { this.progress = div; }}
+        >
         </div>
-        <div id="draggable" ref={(div) => { this.draggable = div; }}>
+        <div
+          id="draggable"
+          ref={(div) => { this.draggable = div; }}
+        >
         </div>
       </div>
     );
