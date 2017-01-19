@@ -26,17 +26,18 @@ export default class ProgressBar extends Component {
   }
 
   mouseMoveHandler = event => {
-    if (this.isDragging  === true) {
-      const parentPosition = this.bar.offsetLeft;
-      const parentWidth = this.bar.getBoundingClientRect().width;
-      event = event || window.event;
-      const dragX = event.pageX;
-      const offset = (dragX - parentPosition) <= 300 ? dragX - parentPosition : parentWidth
-      this.setState({
-        offset
-      });
-      this.setBar();
+    if (!this.isDragging) {
+      return;
     }
+    const parentPosition = this.bar.offsetLeft;
+    const parentWidth = this.bar.getBoundingClientRect().width;
+    event = event || window.event;
+    const dragX = event.pageX;
+    const offset = (dragX - parentPosition) <= 300 ? dragX - parentPosition : parentWidth
+    this.setState({
+      offset
+    });
+    this.setBar();
   }
 
   render() {
